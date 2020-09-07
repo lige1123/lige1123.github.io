@@ -64,6 +64,87 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-电话服务商" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html" class="article-date">
+  <time datetime="2020-09-07T15:29:48.000Z" itemprop="datePublished">2020-09-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html">电话服务商</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="（线性dp）-动态规划"><a href="#（线性dp）-动态规划" class="headerlink" title="（线性dp） 动态规划"></a>（线性dp） 动态规划</h2><ol>
+<li><p>定义dp 状态，<code>dp[n][i][j][k]</code></p>
+<p>代表 n 个请求，最终这三名服务位于第 i, j, k 位置；</p>
+<p>但是显然内存超出；我们考虑降维：</p>
+<ol>
+<li><p>显然最后一定会有一名服务员位于第n 个请求位置 <code>p[n]</code>,所以降低成</p>
+<p><code>dp[n][i][j]</code>  表示  n 个人，其他两个人在 i位置和 j  位置；</p>
+</li>
+</ol>
+<p>但是这里的内存还是没有达到要求，我们在递推公式里面再推导；</p>
+</li>
+</ol>
+<ol start="2">
+<li><p>递推关系式：</p>
+<p> 想要转移到<code>dp[n][i][j]</code> 位置 ，分别是：</p>
+<p>从 i 位置转移到 n 位 ：</p>
+<p><code>(1)   dp[n][i][j] = dp[n - 1][n - 1][j] + c[i][n]</code></p>
+<p>从 j 位置转移到 n 位置 ：</p>
+<p><code>(2)   dp[n][i][j] = dp[n - 1][i][n - 1] + c[j][n]</code></p>
+<p>从 n - 1 位置转移到 n 位置：<br><code>(3)   dp[n][i][j] = dp[n - 1][i][j] + c[n - 1][n]</code></p>
+<p>我们的递推关系式则是取上面三个式子的最小值；</p>
+<p><code>dp[n][i][j] = min((1), (2), (3))</code></p>
+<p>也正是在这里可以看出，递推关系式 只有<code>n - 1</code> 和 <code>n</code> 两个状态；所以可以声明一个二维的数组；</p>
+<p>把上面式子中的所有 <code>n - 1</code> <code>n</code> &amp;1 运算;</p>
+</li>
+<li><p>边界：</p>
+<p><code>dp[0][1][2] = 0</code>, 因为数据要相互比较求最小值，故其他的 dp 值应该取程序极大值；</p>
+</li>
+<li><p>答案：</p>
+<p><code>dp[n &amp; 1]</code> 中的最小值；</p>
+</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************************************************************</span></span><br><span class="line"><span class="comment">	&gt; File Name: 345_1.cpp</span></span><br><span class="line"><span class="comment">	&gt; Author: ZhangZe</span></span><br><span class="line"><span class="comment">	&gt; Mail: zhang_ze_mail@163.com</span></span><br><span class="line"><span class="comment">	&gt; Created Time: 一  9/ 7 21:25:03 2020</span></span><br><span class="line"><span class="comment"> ************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_N 1000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_L 200</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">int</span> c[MAX_L + <span class="number">5</span>][MAX_L + <span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> p[MAX_N + <span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> l, n;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">2</span>][MAX_L + <span class="number">5</span>][MAX_L + <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; l &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= l; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= l ;j++) &#123;</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; c[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">cin</span> &gt;&gt; p[i];</span><br><span class="line">    <span class="built_in">memset</span>(dp[<span class="number">0</span>], <span class="number">0x3f</span>, <span class="keyword">sizeof</span>(dp[<span class="number">0</span>]));</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">1</span>][<span class="number">2</span>] = <span class="number">0</span>; <span class="comment">//三个服务员</span></span><br><span class="line">    p[<span class="number">0</span>] = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        <span class="built_in">memset</span>(dp[((i + <span class="number">1</span>) &amp; <span class="number">1</span>)], <span class="number">0x3f</span>, <span class="keyword">sizeof</span>(dp[(i + <span class="number">1</span>) &amp; <span class="number">1</span>]));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>;  j &lt;= l;j++) &#123;</span><br><span class="line">            <span class="comment">//int (*now)[MAX_L + 5][MAX_L + 5];</span></span><br><span class="line">           <span class="comment">// int (*next)[MAX_L + 5][MAX_L + 5];</span></span><br><span class="line">           <span class="comment">// now = &amp;dp[i &amp; 1];</span></span><br><span class="line">           <span class="comment">// next = &amp;dp[(i + 1)&amp; 1];</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= l; k++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dp[i &amp; <span class="number">1</span>][j][k] == INF) <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">int</span> p1 = p[i], p2 = p[i + <span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span> (j - p2 &amp;&amp; k - p2)</span><br><span class="line">                    dp[(i + <span class="number">1</span>) &amp; <span class="number">1</span>][j][k]</span><br><span class="line">                    = <span class="built_in">min</span>(dp[(i + <span class="number">1</span>) &amp; <span class="number">1</span>][j][k], dp[i &amp; <span class="number">1</span>][j][k] + c[p1][p2]);</span><br><span class="line">                <span class="keyword">if</span> (k - p2 &amp;&amp; p1 - p2)</span><br><span class="line">                    dp[(i + <span class="number">1</span>) &amp; <span class="number">1</span>][k][p1]</span><br><span class="line">                    = <span class="built_in">min</span>(dp[(i + <span class="number">1</span>) &amp; <span class="number">1</span>][k][p1], dp[i &amp; <span class="number">1</span>][j][k] + c[j][p2]);</span><br><span class="line">                <span class="keyword">if</span> (j - p2 &amp;&amp; p1 - p2)</span><br><span class="line">                    dp[(i + <span class="number">1</span>) &amp; <span class="number">1</span>][j][p1]</span><br><span class="line">                    = <span class="built_in">min</span>(dp[i &amp; <span class="number">1</span>][j][k] + c[k][p2], dp[(i + <span class="number">1</span>) &amp; <span class="number">1</span>][j][p1]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> ans = INF;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= l; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= l; j++) &#123;</span><br><span class="line">            ans = <span class="built_in">min</span>(ans, dp[(n &amp; <span class="number">1</span>)][i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lige1123.com/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html" data-id="ckesolxh80003fztu4bz0bt5c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-五海盗分金" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91.html" class="article-date">
@@ -210,7 +291,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91.html" data-id="ckes11m5u000089tu2ej65exg" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91.html" data-id="ckesolxgx0000fztucif2hf3v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -356,7 +437,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91%E9%97%AE%E9%A2%98.html" data-id="ckes11m61000189tug0yh1e1n" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91%E9%97%AE%E9%A2%98.html" data-id="ckesolxh40001fztuas5l0mcj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -400,7 +481,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E6%9E%84%E9%80%A0%E5%BA%8F%E5%88%97%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89%E9%97%AE%E9%A2%98.html" data-id="ckes11m64000289tu5eufgdvs" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E6%9E%84%E9%80%A0%E5%BA%8F%E5%88%97%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89%E9%97%AE%E9%A2%98.html" data-id="ckesolxh60002fztu30bn9v19" class="article-share-link">Share</a>
       
       
     </footer>
@@ -439,6 +520,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html">电话服务商</a>
+          </li>
         
           <li>
             <a href="/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91.html">五海盗分金</a>

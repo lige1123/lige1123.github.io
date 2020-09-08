@@ -64,6 +64,61 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-传纸条" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/uncategorized/%E4%BC%A0%E7%BA%B8%E6%9D%A1.html" class="article-date">
+  <time datetime="2020-09-08T06:58:03.000Z" itemprop="datePublished">2020-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/uncategorized/%E4%BC%A0%E7%BA%B8%E6%9D%A1.html">传纸条</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="传纸条"><a href="#传纸条" class="headerlink" title="传纸条"></a>传纸条</h2><p><a target="_blank" rel="noopener" href="http://oj.haizeix.com/problem/346">http://oj.haizeix.com/problem/346</a></p>
+<p>这是一个比较简单的线性 dp 问题 ：</p>
+<ol>
+<li><p>状态定义 ：</p>
+<p><code>dp[k][i][j]</code>   （步数）横纵坐标之和 为 k 的情况下，第一条路径横坐标在 i 位置，第二条路径 横坐标在 j 位置， 取得的数字之和最大值；</p>
+</li>
+<li><p>递推关系式：</p>
+<p><code>dp[k][i][j] </code> 可以从以下状态转移：</p>
+<p><code>dp[k - 1][i - 1][j - 1]</code>,  <code>dp[k - 1][i - 1][j]</code>,   <code>dp[k - 1][i][j - 1]</code>  , <code>dp[k - 1][i][j]</code></p>
+<p>也就是说：</p>
+<p><code>dp[k][i][j] = max(dp[k - 1][i - 1][j - 1],  dp[k - 1][i - 1][j],   dp[k - 1][i][j - 1], dp[k - 1][i][j]) + a[i][k - i] + a[j][k - j]</code></p>
+</li>
+<li><p>边界条件，注意 i, j 最大值应该分别不大于<code>min(n - 1, k - 1)</code> 和 <code>min(n, k - 1)</code></p>
+</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************************************************************</span></span><br><span class="line"><span class="comment">	&gt; File Name: 346.cpp</span></span><br><span class="line"><span class="comment">	&gt; Author: ZhangZe</span></span><br><span class="line"><span class="comment">	&gt; Mail: zhang_ze_mail@163.com</span></span><br><span class="line"><span class="comment">	&gt; Created Time: 一  9/ 7 23:52:45 2020</span></span><br><span class="line"><span class="comment"> ************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">55</span>][<span class="number">55</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">55</span>][<span class="number">55</span>][<span class="number">105</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++) &#123;</span><br><span class="line">            <span class="built_in">cin</span> &gt;&gt; a[i][j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= (m + n - <span class="number">1</span>); k++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="built_in">min</span>(n - <span class="number">1</span>, k - <span class="number">1</span>); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt;= <span class="built_in">min</span>(n, k - <span class="number">1</span>); j++) &#123;</span><br><span class="line">                <span class="keyword">int</span> x = k - i;</span><br><span class="line">                <span class="keyword">int</span> y = k - j;</span><br><span class="line">                <span class="keyword">if</span> ((x &lt; <span class="number">0</span> || x &gt; m) || (y &lt; <span class="number">0</span> || y &gt; m)) <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">int</span> tmp = <span class="built_in">max</span>(dp[i][j][k - <span class="number">1</span>], dp[i - <span class="number">1</span>][j - <span class="number">1</span>][k - <span class="number">1</span>]);</span><br><span class="line">                tmp = <span class="built_in">max</span>(tmp, dp[i - <span class="number">1</span>][j][k - <span class="number">1</span>]);</span><br><span class="line">                tmp = <span class="built_in">max</span>(tmp, dp[i][j - <span class="number">1</span>][k - <span class="number">1</span>]);</span><br><span class="line">                dp[i][j][k] = tmp + a[i][(k) - i] + a[j][(k) - j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[n - <span class="number">1</span>][n][n + m - <span class="number">1</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lige1123.com/uncategorized/%E4%BC%A0%E7%BA%B8%E6%9D%A1.html" data-id="cketlrupz0000zftu371y0vu4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-电话服务商" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html" class="article-date">
@@ -520,6 +575,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/uncategorized/%E4%BC%A0%E7%BA%B8%E6%9D%A1.html">传纸条</a>
+          </li>
         
           <li>
             <a href="/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html">电话服务商</a>

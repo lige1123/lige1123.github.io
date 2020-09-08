@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>乌龟棋 | Exocoetus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="经典的动态规划题目（乌龟棋）注意 ：  小乌龟行进的距离是固定值；所以可以行进距离和用掉的棋子数量相互推导；  动态规划推导 确定递归状态： dp[i][j][k][l]    分别用掉了 i, j, k, l  个 1步棋，2步棋， 3步棋， 4步棋 获得的最大分数；  递推关系式 必要加上 a[i + j * 2 + x* 3 + y * 4] 分数； dp[i][j][x][y] &#x3D; min">
+<meta property="og:type" content="article">
+<meta property="og:title" content="乌龟棋">
+<meta property="og:url" content="http://lige1123.com/uncategorized/%E4%B9%8C%E9%BE%9F%E6%A3%8B.html">
+<meta property="og:site_name" content="Exocoetus">
+<meta property="og:description" content="经典的动态规划题目（乌龟棋）注意 ：  小乌龟行进的距离是固定值；所以可以行进距离和用掉的棋子数量相互推导；  动态规划推导 确定递归状态： dp[i][j][k][l]    分别用掉了 i, j, k, l  个 1步棋，2步棋， 3步棋， 4步棋 获得的最大分数；  递推关系式 必要加上 a[i + j * 2 + x* 3 + y * 4] 分数； dp[i][j][x][y] &#x3D; min">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-09-08T11:29:08.000Z">
+<meta property="article:modified_time" content="2020-09-08T11:32:34.641Z">
+<meta property="article:author" content="John Zhang">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Exocoetus" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Exocoetus</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lige1123.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-乌龟棋" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/uncategorized/%E4%B9%8C%E9%BE%9F%E6%A3%8B.html" class="article-date">
+  <time datetime="2020-09-08T11:29:08.000Z" itemprop="datePublished">2020-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      乌龟棋
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="经典的动态规划题目（乌龟棋）"><a href="#经典的动态规划题目（乌龟棋）" class="headerlink" title="经典的动态规划题目（乌龟棋）"></a>经典的动态规划题目（乌龟棋）</h2><p>注意 ：</p>
+<ol>
+<li>小乌龟行进的距离是固定值；所以可以行进距离和用掉的棋子数量相互推导；</li>
+</ol>
+<h4 id="动态规划推导"><a href="#动态规划推导" class="headerlink" title="动态规划推导"></a>动态规划推导</h4><ol>
+<li><p>确定递归状态：</p>
+<p><code>dp[i][j][k][l]</code>    分别用掉了 <code>i, j, k, l </code> 个 1步棋，2步棋， 3步棋， 4步棋 获得的最大分数；</p>
+</li>
+<li><p>递推关系式</p>
+<p>必要加上 <code>a[i + j * 2 + x* 3 + y * 4]</code> 分数；</p>
+<p><code>dp[i][j][x][y] = min(dp[i - 1][j][x][y],dp[i][j - 1][x][y], dp[i][j][x - 1][y], dp[i][j][x][y - 1]) + a[i + j * 2 + x * 3 + y * 4]</code></p>
+</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************************************************************</span></span><br><span class="line"><span class="comment">	&gt; File Name: 347.cpp</span></span><br><span class="line"><span class="comment">	&gt; Author: ZhangZe</span></span><br><span class="line"><span class="comment">	&gt; Mail: zhang_ze_mail@163.com</span></span><br><span class="line"><span class="comment">	&gt; Created Time: 二  9/ 8 15:15:30 2020</span></span><br><span class="line"><span class="comment"> ************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_A 350</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_B 35</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">int</span> a[MAX_A + <span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> b;</span><br><span class="line"><span class="keyword">int</span> dp[MAX_B + <span class="number">5</span>][MAX_B + <span class="number">5</span>][MAX_B + <span class="number">5</span>][MAX_B + <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> c[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) <span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; b;</span><br><span class="line">        c[b]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= c[<span class="number">1</span>]; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= c[<span class="number">2</span>]; j++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt;= c[<span class="number">3</span>]; x++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> y = <span class="number">0</span>; y &lt;= c[<span class="number">4</span>]; y++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (i &gt; <span class="number">0</span>) dp[i][j][x][y] = <span class="built_in">max</span>(dp[i][j][x][y], dp[i - <span class="number">1</span>][j][x][y]);</span><br><span class="line">                    <span class="keyword">if</span> (j &gt; <span class="number">0</span>) dp[i][j][x][y] = <span class="built_in">max</span>(dp[i][j][x][y], dp[i][j - <span class="number">1</span>][x][y]);</span><br><span class="line">                    <span class="keyword">if</span> (x &gt; <span class="number">0</span>) dp[i][j][x][y] = <span class="built_in">max</span>(dp[i][j][x][y], dp[i][j][x - <span class="number">1</span>][y]);</span><br><span class="line">                    <span class="keyword">if</span> (y &gt; <span class="number">0</span>) dp[i][j][x][y] = <span class="built_in">max</span>(dp[i][j][x][y], dp[i][j][x][y - <span class="number">1</span>]);</span><br><span class="line">                    dp[i][j][x][y] += a[i + j * <span class="number">2</span> + x * <span class="number">3</span> + y * <span class="number">4</span>];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; dp[c[<span class="number">1</span>]][c[<span class="number">2</span>]][c[<span class="number">3</span>]][c[<span class="number">4</span>]] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lige1123.com/uncategorized/%E4%B9%8C%E9%BE%9F%E6%A3%8B.html" data-id="cketvk9gs0001pntugxr22ung" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/uncategorized/%E4%BC%A0%E7%BA%B8%E6%9D%A1.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">传纸条</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/%E4%B9%8C%E9%BE%9F%E6%A3%8B.html">乌龟棋</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/%E4%BC%A0%E7%BA%B8%E6%9D%A1.html">传纸条</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html">电话服务商</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91.html">五海盗分金</a>
+          </li>
+        
+          <li>
+            <a href="/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91%E9%97%AE%E9%A2%98.html">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Zhang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -64,6 +64,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-低价购买" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/uncategorized/%E4%BD%8E%E4%BB%B7%E8%B4%AD%E4%B9%B0.html" class="article-date">
+  <time datetime="2020-09-09T04:26:00.000Z" itemprop="datePublished">2020-09-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/uncategorized/%E4%BD%8E%E4%BB%B7%E8%B4%AD%E4%B9%B0.html">低价购买</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="低价购买"><a href="#低价购买" class="headerlink" title="低价购买"></a>低价购买</h2><p><a target="_blank" rel="noopener" href="http://oj.haizeix.com/problem/349">http://oj.haizeix.com/problem/349</a></p>
+<p>熟悉（经典）的 单调子序列问题 ：</p>
+<ol>
+<li><p>定义dp 状态 </p>
+<p><code>dp[i]</code>   以 第 i 位数结尾，最大下降子序列长度；</p>
+<p><code>f[i]</code>  以第 i  位数结尾，长度为最大下降序列长度的个数；</p>
+</li>
+<li><p>定义递推关系式：</p>
+<p><code>dp[i] = max(dp[j] + 1)   </code> ——— <code>j &lt; i &amp;&amp; val[i] &lt; val[j] </code></p>
+<p><code>f[i]</code> :  <code>+= f[j]  </code> ——  `j &lt; i &amp;&amp; dp[j] + 1 == dp[i] &amp;&amp; val[j] &gt; val[i] </p>
+<p>另外考虑去重的问题：</p>
+</li>
+</ol>
+<p>   a_j  ,    a_k,    a_i,    当  a_i  小于  a_j   和   a_k，如果此时 a_j  与 a_k ，<code>dp[j]</code>与<code>dp[k]</code>相等，那么说明 <code>f[j]</code> 完全可以被<code>f[k]</code> 包含加入到 <code>f[i]</code>，所以 此时可以让 <code>f[j] = 0</code>;</p>
+<p>   去重方法就是遍历所有的<code>j &lt; k</code> 如果满足两个相等条件，那么<code>f[j]</code>置为 0；   </p>
+<ol start="3">
+<li><p>答案 ：</p>
+<p>最长下降子序列是遍历所有的 <code>dp[i]</code> （遍历所有val 种的数字作为结尾(最小值)） 找到最大值；</p>
+<p>最长下降子序列个数，是在第一问题的基础上 将所有满足 <code>dp[i] == ans</code> 的<code>f[i]</code> 想加之和；</p>
+</li>
+</ol>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*************************************************************************</span></span><br><span class="line"><span class="comment">	&gt; File Name: 349.cpp</span></span><br><span class="line"><span class="comment">	&gt; Author: ZhangZe</span></span><br><span class="line"><span class="comment">	&gt; Mail: zhang_ze_mail@163.com</span></span><br><span class="line"><span class="comment">	&gt; Created Time: 三  9/ 9 10:55:25 2020</span></span><br><span class="line"><span class="comment"> ************************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_N 5000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> val[MAX_N + <span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> dp[MAX_N + <span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> f[MAX_N + <span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> ans, sum;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) <span class="built_in">cin</span> &gt;&gt; val[i];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        dp[i] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (val[j] &gt; val[i]) &#123;</span><br><span class="line">                dp[i] = <span class="built_in">max</span>(dp[i], dp[j] + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(dp[i] == <span class="number">1</span>) f[i] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[j] + <span class="number">1</span> != dp[i]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (val[j] &lt;= val[i]) <span class="keyword">continue</span>;</span><br><span class="line">            f[i] += f[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (val[i] == val[j] &amp;&amp; dp[i] == dp[j]) f[j] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ans = <span class="built_in">max</span>(ans, dp[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dp[i] == ans) sum += f[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; sum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lige1123.com/uncategorized/%E4%BD%8E%E4%BB%B7%E8%B4%AD%E4%B9%B0.html" data-id="ckeuvrsgt0005sptu18wd7b2q" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-花店橱窗" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/uncategorized/%E8%8A%B1%E5%BA%97%E6%A9%B1%E7%AA%97.html" class="article-date">
@@ -122,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E8%8A%B1%E5%BA%97%E6%A9%B1%E7%AA%97.html" data-id="cketzmrbz00074vtu1nnmhtt1" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E8%8A%B1%E5%BA%97%E6%A9%B1%E7%AA%97.html" data-id="ckeuvrsgw0008sptugnhteyma" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,7 +234,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E4%B9%8C%E9%BE%9F%E6%A3%8B.html" data-id="cketzmrbp00014vtuhwbz6mh4" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E4%B9%8C%E9%BE%9F%E6%A3%8B.html" data-id="ckeuvrsgl0001sptu66kreuxp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -229,7 +289,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E4%BC%A0%E7%BA%B8%E6%9D%A1.html" data-id="cketzmrbw00044vtu5urxfd2k" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E4%BC%A0%E7%BA%B8%E6%9D%A1.html" data-id="ckeuvrsgs0004sptufchl2s91" class="article-share-link">Share</a>
       
       
     </footer>
@@ -310,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html" data-id="cketzmrby00064vtu3i492407" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html" data-id="ckeuvrsgv0007sptufa744jd8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -466,7 +526,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91.html" data-id="cketzmrbt00024vtu6num8ffy" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91.html" data-id="ckeuvrsgp0002sptu380z2gv4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -612,7 +672,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91%E9%97%AE%E9%A2%98.html" data-id="cketzmrbv00034vtuezarhvbi" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91%E9%97%AE%E9%A2%98.html" data-id="ckeuvrsgr0003sptuhl2r5n4a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -656,7 +716,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lige1123.com/uncategorized/%E6%9E%84%E9%80%A0%E5%BA%8F%E5%88%97%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89%E9%97%AE%E9%A2%98.html" data-id="cketzmrbx00054vtu9wb7335b" class="article-share-link">Share</a>
+      <a data-url="http://lige1123.com/uncategorized/%E6%9E%84%E9%80%A0%E5%BA%8F%E5%88%97%EF%BC%88%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%89%E9%97%AE%E9%A2%98.html" data-id="ckeuvrsgu0006sptuebrg9xp0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -697,6 +757,10 @@
       <ul>
         
           <li>
+            <a href="/uncategorized/%E4%BD%8E%E4%BB%B7%E8%B4%AD%E4%B9%B0.html">低价购买</a>
+          </li>
+        
+          <li>
             <a href="/uncategorized/%E8%8A%B1%E5%BA%97%E6%A9%B1%E7%AA%97.html">花店橱窗</a>
           </li>
         
@@ -710,10 +774,6 @@
         
           <li>
             <a href="/uncategorized/%E7%94%B5%E8%AF%9D%E6%9C%8D%E5%8A%A1%E5%95%86.html">电话服务商</a>
-          </li>
-        
-          <li>
-            <a href="/uncategorized/%E4%BA%94%E6%B5%B7%E7%9B%97%E5%88%86%E9%87%91.html">五海盗分金</a>
           </li>
         
       </ul>
